@@ -7,6 +7,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -21,6 +23,9 @@ public class TestForResource {
 
 	private MockMvc mockMvc;
 	
+	@Mock
+	private MessageService messageService;
+	
 	@InjectMocks
 	private NewMessageResource newMessageResource;
 	
@@ -33,9 +38,13 @@ public class TestForResource {
 	
 	@Test
 	public void testFirst() throws Exception {
+		Mockito.when(messageService.messageString()).thenReturn("Test 1");
+		
 		mockMvc.perform(MockMvcRequestBuilders.get("/home")
 				).andExpect(MockMvcResultMatchers.status().isOk())
-		.andExpect(MockMvcResultMatchers.content().string("Test1"));
+		.andExpect(MockMvcResultMatchers.content().string("Test 1"));
+		
+		Mockito.verify(messageService).messageString();
 	}
 
 	

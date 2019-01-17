@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,10 +9,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/home")
 public class NewMessageResource {
+	
+	@Autowired
+	private MessageService service;
+	
+
 	@GetMapping
 	public String testingMessage() {
-
-		return "Test1";
+	return service.messageString();
 }
 	
 	@GetMapping(value = "/json", produces= MediaType.APPLICATION_JSON_VALUE)
