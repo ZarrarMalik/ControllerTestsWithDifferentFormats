@@ -3,6 +3,8 @@ package com.example.demo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,13 +26,24 @@ public class NewMessageResource {
 		return new Hello("Welcome", "Test2");
 	}
 	
+	@PostMapping(value = "/post", consumes= MediaType.APPLICATION_JSON_VALUE,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public Hello post(@RequestBody Hello hello) {
+		return hello;
+	}
 	
 	
 	
-	private class Hello{
+	public static class Hello{
 		private String title;
 		private String value;
 		
+		
+		public Hello() {
+			super();
+		}
+
+
 		public Hello(String title, String value) {
 			super();
 			this.title = title;

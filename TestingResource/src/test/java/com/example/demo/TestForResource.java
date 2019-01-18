@@ -59,4 +59,19 @@ public class TestForResource {
 	}
 	
 	
+	@Test
+	public void testThirdWithPost() throws Exception{
+		String json="{\n" +
+                "  \"title\": \"Welcome\",\n" +
+                "  \"value\": \"Test3\"\n" +
+                "}";
+		mockMvc.perform(MockMvcRequestBuilders.post("/home/post")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(json))
+		.andExpect(MockMvcResultMatchers.status().isOk())
+		.andExpect(MockMvcResultMatchers.jsonPath("$.title", Matchers.is("Welcome")))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.value", Matchers.is("Test3")))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.*", Matchers.hasSize(2)));
+	}
+	
 }
